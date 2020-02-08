@@ -1,0 +1,33 @@
+{
+  "name": "resend-message-bot",
+  "version": "1.0.0",
+  "description": "Bot that builds and resends messages from admin panel",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/telerobots/resend-message-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/telerobots/resend-message-bot/issues"
+  },
+  "homepage": "https://github.com/telerobots/resend-message-bot#readme",
+  "dependencies": {
+    "argon2": "^0.25.1",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "hbs": "^4.1.0",
+    "mongoose": "^5.8.11"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
