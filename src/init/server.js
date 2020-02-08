@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { promisify } = require('util');
 const engine = require('../engine/engine');
-//const router = require('../router/router');
+const router = require('../router/router');
 const config = require('../config/config.js');
 
 // Constants
@@ -17,7 +17,7 @@ const init = async function() {
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
     app.use(cookieParser());
-    //app.use('/', router);
+    app.use('/', router);
 
     engine.init(app);
 
