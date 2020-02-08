@@ -2,13 +2,12 @@ const argon2 = require('argon2');
 
 const User = require('../models/User');
 
-async function addUser(login, password) {
+async function addUserDB(login, password) {
     const hash = await argon2.hash(password);
 
     const user = new User({
         login,
         password: hash,
-        isAdmin: false
     });
 
     await user.save();
@@ -26,15 +25,15 @@ async function findUser(login) {
     return user;
 }
 
-async function deleteUser(login) {
+async function deleteUserDB(login) {
     await User.deleteOne({ login }, err => {
         if (err) throw new Error('Some problem with deleting user.');
     });
 }
 
 module.exports = {
-    addUser,
+    addUserDB,
     checkUser,
     findUser,
-    deleteUser
+    deleteUserDB
 };

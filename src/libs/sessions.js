@@ -1,16 +1,16 @@
 const Session = require('../models/Session');
 
-async function addSession(resendBotID, login) {
+async function addSessionDB(resendBotId, login) {
     const session = new Session({
-        resendBotID,
-        login,
+        resendBotId,
+        login
     });
 
     await session.save();
 }
 
-async function findSessionId(resendBotID) {
-    const session = await Session.findOne({ resendBotID });
+async function findSessionId(resendBotId) {
+    const session = await Session.findOne({ resendBotId });
     if (!session) return null;
     return session;
 }
@@ -21,8 +21,8 @@ async function findSessionLogin(login) {
     return session;
 }
 
-async function updateSignOut(resendBotID) {
-    const info = await Session.updateOne({ resendBotID }, { loggged: false });
+async function updateSignOut(resendBotId) {
+    const info = await Session.updateOne({ resendBotId }, { loggged: false });
     if (!info) throw new Error('Some error with sign out!');
     return info;
 }
@@ -33,17 +33,17 @@ async function updateSignIn(login) {
     return info;
 }
 
-async function deleteSession(login) {
+async function deleteSessionDB(login) {
     await Session.deleteOne({ login }, err => {
         if (err) throw new Error('Some problem with deleting session.');
     });
 }
 
 module.exports = {
-    addSession,
+    addSessionDB,
     findSessionId,
     findSessionLogin,
     updateSignIn,
     updateSignOut,
-    deleteSession
+    deleteSessionDB
 };
