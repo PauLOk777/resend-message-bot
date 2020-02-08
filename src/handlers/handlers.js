@@ -70,12 +70,15 @@ async function homePage(req, res) {
 			return;
 		}
 
+		let adminCheck = false;
 		if (currentSession.isAdmin) {
-			res.send('Admin');
-		} else {
-			res.send('User');
+			adminCheck = true;
 		}
 
+		res.render('home.hbs', {
+			title: 'Home',
+			adminCheck
+		});
 	} catch (e) {
 		console.error(e);
 		res.status(404);
