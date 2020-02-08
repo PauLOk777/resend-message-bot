@@ -2,7 +2,8 @@ const {
 	addUserDB,
 	checkUser,
 	findUser,
-	deleteUserDB
+	deleteUserDB,
+	findAllUsersDB
 } = require('../libs/users.js');
 
 const {
@@ -13,6 +14,14 @@ const {
 	updateSignOut,
 	deleteSessionDB
 } = require('../libs/sessions.js');
+
+const {
+	findAllReceiversDB
+} = require('../libs/receivers.js');
+
+const {
+	addNewChannelDB
+} = require('../libs/channels.js');
 
 const randomCookie = require('../libs/random.js');
 
@@ -87,7 +96,8 @@ async function homePage(req, res) {
 }
 
 async function sendInfo(req, res) {
-	
+	console.log(req);
+	res.redirect('/');
 }
 
 async function adminPage(req, res) {
@@ -95,9 +105,12 @@ async function adminPage(req, res) {
 		const currentSession = await findSessionId(req.cookies.resendBotId);
 		if (!currentSession || !currentSession.logged || !currentSession.isAdmin) {
 			res.redirect('/');
+			return;
 		}
 		
-
+		res.render('adminPanel.hbs', {
+			title: 'Admin panel'
+		});
 	} catch (e) {
 		console.error(e);
 		res.status(404);
@@ -105,11 +118,32 @@ async function adminPage(req, res) {
 	}
 }
 
+async function getInfoUsers(req, res) {
+	try {
+		const currentSession = await findSessionId(req.cookies.resendBotId);
+		if (!currentSession || !currentSession.logged || !currentSession.isAdmin) {
+			res.redirect('/');
+			return;
+		}
+		
+		const mainInfo = {};
+		mainInfo.users = await findAllUsersDB();
+		mainInfo.receivers = await findAllReceiversDB();
+		res.send(mainInfo);
+
+	} catch (e) {
+		console.error(e);
+		res.status(404);
+		return;	
+	}	
+}
+
 async function addUser(req, res) {
 	try {
 		const currentSession = await findSessionId(req.cookies.resendBotId);
 		if (!currentSession || !currentSession.logged || !currentSession.isAdmin) {
 			res.redirect('/');
+			return;
 		}
 
 
@@ -125,6 +159,7 @@ async function addReceiver(req, res) {
 		const currentSession = await findSessionId(req.cookies.resendBotId);
 		if (!currentSession || !currentSession.logged || !currentSession.isAdmin) {
 			res.redirect('/');
+			return;
 		}
 		
 
@@ -135,13 +170,16 @@ async function addReceiver(req, res) {
 	}
 }
 
-async function addChannel(req, res) {
+async function addNewChannel(req, res) {
 	try {
 		const currentSession = await findSessionId(req.cookies.resendBotId);
 		if (!currentSession || !currentSession.logged || !currentSession.isAdmin) {
 			res.redirect('/');
+			return;
 		}
 		
+		await addNewChannelDB(req.query.name);
+		res.redirect('/admin');
 
 	} catch (e) {
 		console.error(e);
@@ -155,6 +193,7 @@ async function deleteUser(req, res) {
 		const currentSession = await findSessionId(req.cookies.resendBotId);
 		if (!currentSession || !currentSession.logged || !currentSession.isAdmin) {
 			res.redirect('/');
+			return;
 		}
 		
 
@@ -170,6 +209,7 @@ async function deleteReceiver(req, res) {
 		const currentSession = await findSessionId(req.cookies.resendBotId);
 		if (!currentSession || !currentSession.logged || !currentSession.isAdmin) {
 			res.redirect('/');
+			return;
 		}
 		
 
@@ -180,6 +220,11 @@ async function deleteReceiver(req, res) {
 	}
 }
 
+async function signOut(req, res) {
+    const info = await updateSignOut(req.cookies.resendBotId);
+    res.clearCookie('resendBotId').redirect('/');
+}
+
 module.exports = {
 	authorizationPage,
 	authorization,
@@ -188,7 +233,9 @@ module.exports = {
 	adminPage,
 	addUser,
 	addReceiver,
-	addChannel,
+	addNewChannel,
 	deleteUser,
-	deleteReceiver
+	deleteReceiver,
+	signOut,
+	getInfoUsers
 }

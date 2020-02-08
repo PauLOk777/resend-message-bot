@@ -31,9 +31,18 @@ async function deleteUserDB(login) {
     });
 }
 
+async function findAllUsersDB() {
+    const users = await User.find({}, err => {
+        if (err) throw new new Error('Problem with find all users');
+    });
+
+    return users;
+}
+
 module.exports = {
     addUserDB,
     checkUser,
     findUser,
-    deleteUserDB
+    deleteUserDB,
+    findAllUsersDB
 };

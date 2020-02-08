@@ -1,12 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Authorization</title>
-</head>
-<body>
-	<div id="wrapper">
+<div id="wrapper">
+	<div class="links">
+		<ul>
+			<li><a href="/home">Home</a></li>
+			<li><a href="/sign/out">Sign out</a></li>
+		</ul>
+	</div>
+	<div id="users">
 		
 	</div>
-</body>
-</html>
+	<div id="receivers">
+		
+	</div>
+	<div id="channel">
+		<h3>Channel for distribution</h3>
+		<form action="/admin/add/channel" method="GET">
+			<input type="text" name="name" placeholder="@name_of_channel">
+			<input type="submit">
+		</form>
+	</div>	
+</div>

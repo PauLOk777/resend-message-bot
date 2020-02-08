@@ -10,8 +10,10 @@ router.post('/home', handlers.sendInfo);
 router.get('/admin', handlers.adminPage);
 router.post('/admin/add/user', handlers.addUser);
 router.get('/admin/add/receiver', handlers.addReceiver);
-router.get('/admin/add/channel', handlers.addChannel);
+router.get('/admin/add/channel', handlers.addNewChannel);
 router.get('/admin/delete/user', handlers.deleteUser);
 router.get('/admin/delete/user', handlers.deleteReceiver);
+router.get('/sign/out', handlers.signOut);
+router.get('/admin/get', handlers.getInfoUsers);
 
 module.exports = router;
