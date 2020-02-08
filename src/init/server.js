@@ -1,13 +1,11 @@
-// Modules
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { promisify } = require('util');
-const engine = require('../engine/engine');
-const router = require('../router/router');
+const engine = require('../engine/engine.js');
+const router = require('../router/router.js');
 const config = require('../config/config.js');
 
-// Constants
 const PORT = process.env.PORT || config.PORT || 3000;
 
 const init = async function() {
