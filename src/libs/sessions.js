@@ -22,7 +22,7 @@ async function findSessionLogin(login) {
 }
 
 async function updateSignOut(resendBotId) {
-    const info = await Session.updateOne({ resendBotId }, { loggged: false });
+    const info = await Session.updateOne({ resendBotId }, { logged: false });
     if (!info) throw new Error('Some error with sign out!');
     return info;
 }

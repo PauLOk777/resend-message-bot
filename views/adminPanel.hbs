@@ -1,48 +1,24 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="js/getInfoUsers.js"></script>
+<script src="js/popupOpenClose.js"></script>
+<script src="js/buildUsersAndReceivers.js"></script>
 <script>
-	function popupOpenClose(popup) {
-	
-	/* Add div inside popup for layout if one doesn't exist */
-	if ($(".wrapper-popup").length == 0){
-		$(popup).wrapInner("<div class='wrapper-popuppost'></div>");
-	} else {
-		$(popup).wrapInner("<div class='wrapper-popupget'></div>");
-	}
-	
-	/* Open popup */
-	$(popup).show();
-
-	/* Close popup if user clicks on background */
-	$(popup).click(function(e) {
-		if ( e.target == this ) {
-			if ($(popup).is(':visible')) {
-				$(popup).hide();
-			}
-		}
-	});
-
-	/* Close popup and remove errors if user clicks on cancel or close buttons */
-	$(popup).find("button[name=close]").on("click", function() {
-		if ($(".formElementError").is(':visible')) {
-			$(".formElementError").remove();
-		}
-		$(popup).hide();
-	});
-}
 
 $(document).ready(function () {
 	$("[data-js=open]").on("click", function() {
 		popupOpenClose($(".popup.post"));
 	});
-});
-
-$(document).ready(function () {
 	$("[data-js=openn]").on("click", function() {
 		popupOpenClose($(".popup.get"));
 	});
+	getAll()
+	.then(info => {
+		buildUsersAndReceivers(info);
+	});
 });
+
 </script>
-<div id="wrapper">
+<div id="wrapper-admin">
 	<div class="links">
 		<ul>
 			<li><a href="/home">Home</a></li>
@@ -56,12 +32,12 @@ $(document).ready(function () {
 			<input type="submit">
 		</form>
 	</div>
-	<h2>Users:</h2>
 	<div id="users">
+		<h2>Users:</h2>
 		<div id="login-list">
 			
 		</div>
-		<button data-js="open">Add new user</button>
+		<button data-js="open" class="add-new">Add new user</button>
 		<div class="popup post">
 			<form action="/admin/add/user" method="POST">
 				<input name="login" type="text" placeholder="Login" style="margin-bottom: 10px;"><br>
@@ -71,12 +47,12 @@ $(document).ready(function () {
 			<button name="close">Close</button>
 		</div>	
 	</div>
-	<h2>Receivers:</h2>
 	<div id="receivers">
+		<h2>Receivers:</h2>
 		<div id="username-list">
 			
 		</div>
-		<button data-js="openn">Add new receiver</button>
+		<button data-js="openn" class="add-new">Add new receiver</button>
 		<div class="popup get">
 			<form action="/admin/add/receiver" method="GET">
 				<input name="username" type="text" placeholder="Username" style="margin-bottom: 10px;"><br>

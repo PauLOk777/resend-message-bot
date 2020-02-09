@@ -49,3 +49,36 @@ button {
 form {
 	display: inline;
 }
+
+#wrapper-admin {
+	width: 35%;
+	text-align: center;
+}
+
+#users, #receivers {
+	height: 420px;
+	width: 100%;
+}
+
+#login-list, #username-list {
+	overflow-y: scroll;
+	max-height: 300px;
+}
+
+.add-new {
+	margin-top: 10px;
+}
+
+.list {
+	border: 5px solid #E9D8CC;
+	background-color: white;
+	text-align: right;
+	position: relative;
+}
+
+.list span {
+	position: absolute;
+	left: 5px;
+	top: 50%;
+	transform: translate(0%, -50%);
+}
