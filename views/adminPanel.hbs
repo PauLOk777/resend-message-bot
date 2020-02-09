@@ -3,8 +3,10 @@
 	function popupOpenClose(popup) {
 	
 	/* Add div inside popup for layout if one doesn't exist */
-	if ($(".wrapper").length == 0){
-		$(popup).wrapInner("<div class='wrapper'></div>");
+	if ($(".wrapper-popup").length == 0){
+		$(popup).wrapInner("<div class='wrapper-popuppost'></div>");
+	} else {
+		$(popup).wrapInner("<div class='wrapper-popupget'></div>");
 	}
 	
 	/* Open popup */
@@ -30,7 +32,13 @@
 
 $(document).ready(function () {
 	$("[data-js=open]").on("click", function() {
-		popupOpenClose($(".popup"));
+		popupOpenClose($(".popup.post"));
+	});
+});
+
+$(document).ready(function () {
+	$("[data-js=openn]").on("click", function() {
+		popupOpenClose($(".popup.get"));
 	});
 });
 </script>
@@ -41,12 +49,6 @@ $(document).ready(function () {
 			<li><a href="/sign/out">Sign out</a></li>
 		</ul>
 	</div>
-	<div id="users">
-		
-	</div>
-	<div id="receivers">
-		
-	</div>
 	<div id="channel">
 		<h3>Channel for distribution</h3>
 		<form action="/admin/add/channel" method="GET">
@@ -54,9 +56,33 @@ $(document).ready(function () {
 			<input type="submit">
 		</form>
 	</div>
-	
-	<button data-js="open">Click me</button>
-	<div class="popup">
-		<button name="close">Close</button>
+	<h2>Users:</h2>
+	<div id="users">
+		<div id="login-list">
+			
+		</div>
+		<button data-js="open">Add new user</button>
+		<div class="popup post">
+			<form action="/admin/add/user" method="POST">
+				<input name="login" type="text" placeholder="Login" style="margin-bottom: 10px;"><br>
+				<input name="password" type="password" placeholder="Password" style="margin-bottom: 10px;"><br>
+				<button type="submit">Submit</button>
+			</form>
+			<button name="close">Close</button>
+		</div>	
+	</div>
+	<h2>Receivers:</h2>
+	<div id="receivers">
+		<div id="username-list">
+			
+		</div>
+		<button data-js="openn">Add new receiver</button>
+		<div class="popup get">
+			<form action="/admin/add/receiver" method="GET">
+				<input name="username" type="text" placeholder="Username" style="margin-bottom: 10px;"><br>
+				<button type="submit">Submit</button>
+			</form>
+			<button name="close">Close</button>
+		</div>		
 	</div>
 </div>

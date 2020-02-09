@@ -16,14 +16,15 @@ const {
 } = require('../libs/sessions.js');
 
 const {
-	findAllReceiversDB
+	findAllReceiversDB,
+	addNewReceiverDB
 } = require('../libs/receivers.js');
 
 const {
 	addNewChannelDB
 } = require('../libs/channels.js');
 
-const randomCookie = require('../libs/random.js');
+const generateKey = require('../libs/random.js');
 
 async function authorizationPage(req, res) {
 	try {
@@ -146,6 +147,11 @@ async function addUser(req, res) {
 			return;
 		}
 
+		const { login, password } = req.body;
+		const key = generateKey(50);
+		await addSessionDB(key, login);
+		await addUserDB(login, password);
+		res.redirect('/admin');
 
 	} catch (e) {
 		console.error(e);
@@ -162,7 +168,9 @@ async function addReceiver(req, res) {
 			return;
 		}
 		
-
+		await addNewReceiverDB(req.query.username);
+		res.redirect('/admin');
+	
 	} catch (e) {
 		console.error(e);
 		res.status(404);
