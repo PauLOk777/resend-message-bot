@@ -26,6 +26,7 @@ const {
 	getChannelDB
 } = require('../libs/channels.js');
 
+const { upload } = require('../init/multer.js');
 const generateKey = require('../libs/random.js');
 
 async function authorizationPage(req, res) {
@@ -99,7 +100,7 @@ async function homePage(req, res) {
 }
 
 async function sendInfo(req, res) {
-	console.log(req);
+	console.log(req.body, req.files);
 	res.redirect('/');
 }
 
