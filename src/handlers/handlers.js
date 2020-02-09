@@ -26,7 +26,8 @@ const {
 	getChannelDB
 } = require('../libs/channels.js');
 
-const { upload } = require('../init/multer.js');
+const upload = require('../init/multer.js');
+
 const generateKey = require('../libs/random.js');
 
 async function authorizationPage(req, res) {
@@ -87,10 +88,12 @@ async function homePage(req, res) {
 		if (currentSession.isAdmin) {
 			adminCheck = true;
 		}
-
+		
+		const error = req.query.error;
 		res.render('home.hbs', {
 			title: 'Home',
-			adminCheck
+			adminCheck,
+			error
 		});
 	} catch (e) {
 		console.error(e);
@@ -100,8 +103,14 @@ async function homePage(req, res) {
 }
 
 async function sendInfo(req, res) {
-	console.log(req.body, req.files);
-	res.redirect('/');
+	upload(req, res, err => {
+		if (err) {
+			res.redirect('/home?error=true');
+		} else {
+			console.log(req.body, req.files);
+			res.redirect('/');
+		}
+	});
 }
 
 async function adminPage(req, res) {

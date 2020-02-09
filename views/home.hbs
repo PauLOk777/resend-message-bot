@@ -24,6 +24,9 @@
 				<span>Attach photo:</span><br>
 				<input type="file" name="photo" multiple>
 			</div>
+			{{#if error}}
+			<span class="error" style="color: red;">Only JPEG, JPG, PNG are allowed</span><br><br>
+			{{/if}}
 			<input type="submit" value="Send">
 		</form>
 	</div>
