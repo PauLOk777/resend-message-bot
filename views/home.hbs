@@ -8,7 +8,7 @@
 		</ul>
 	</div>
 	<div id="home-form">
-		<form action="/home" method="POST">	
+		<form action="/home" method="POST" enctype="multipart/form-data">	
 			<div id="textarea">
 				<textarea name="textarea" cols="50" rows="20"></textarea>
 			</div>
@@ -16,9 +16,9 @@
 				<input type="tel" name="telephone" placeholder="Telephone">
 			</div>
 			<div id="checkbox">
-				<input type="checkbox" name="whatsApp" value="whatsApp"><span>WhatsApp</span><br>
-				<input type="checkbox" name="telegram" value="telegram"><span>Telegram</span><br>
-				<input type="checkbox" name="viber" value="viber"><span>Viber</span><br>
+				<input type="checkbox" name="whatsApp" value="true"><span>WhatsApp</span><br>
+				<input type="checkbox" name="telegram" value="true"><span>Telegram</span><br>
+				<input type="checkbox" name="viber" value="true"><span>Viber</span><br>
 			</div>
 			<div id="choose-file">
 				<span>Attach photo:</span><br>

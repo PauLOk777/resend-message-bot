@@ -6,6 +6,12 @@ async function addNewChannelDB(name) {
 	await channel.save();
 }
 
+async function getChannelDB() {
+	const channel = await Channel.findOne({});
+	return channel;
+}
+
 module.exports = {
-	addNewChannelDB
+	addNewChannelDB,
+	getChannelDB
 }

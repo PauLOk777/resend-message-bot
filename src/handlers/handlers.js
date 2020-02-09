@@ -22,7 +22,8 @@ const {
 } = require('../libs/receivers.js');
 
 const {
-	addNewChannelDB
+	addNewChannelDB,
+	getChannelDB
 } = require('../libs/channels.js');
 
 const generateKey = require('../libs/random.js');
@@ -109,9 +110,12 @@ async function adminPage(req, res) {
 			res.redirect('/');
 			return;
 		}
+
+		const channel = await getChannelDB();
 		
 		res.render('adminPanel.hbs', {
-			title: 'Admin panel'
+			title: 'Admin panel',
+			channel
 		});
 	} catch (e) {
 		console.error(e);

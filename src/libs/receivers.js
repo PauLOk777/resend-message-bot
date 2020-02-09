@@ -24,5 +24,6 @@ async function deleteReceiverDB(username) {
 
 module.exports = {
 	findAllReceiversDB,
-	addNewReceiverDB
+	addNewReceiverDB,
+	deleteReceiverDB
 }
