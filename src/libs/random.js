@@ -1,12 +1,11 @@
 function generateKey(size) {
-    let min = 0;
-    let max = 36;
-    let arr = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    let res = '';
+    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const max = chars.length;
 
+    let res = '';
     for (let i = 0; i < size; i++) {
-        let index = Math.floor(min + Math.random() * (max - min));
-        res += arr[index];
+        const index = Math.floor(Math.random() * max);
+        res += chars[index];
     }
 
     return res;
