@@ -3,63 +3,111 @@
 <script src="js/popupOpenClose.js"></script>
 <script src="js/buildUsersAndReceivers.js"></script>
 <script>
-
-$(document).ready(function () {
-	$("[data-js=open]").on("click", function() {
-		popupOpenClose($(".popup.post"));
-	});
-	$("[data-js=openn]").on("click", function() {
-		popupOpenClose($(".popup.get"));
-	});
-	getAll()
-	.then(info => {
-		buildUsersAndReceivers(info);
-	});
-});
-
+    $(document).ready(function () {
+        $('[data-js=open]').on('click', function () {
+            popupOpenClose($('.popup.post'))
+        })
+        $('[data-js=openn]').on('click', function () {
+            popupOpenClose($('.popup.get'))
+        })
+        getAll().then(info => {
+            buildUsersAndReceivers(info)
+        })
+    })
 </script>
 <div id="wrapper-admin">
-	<div class="links">
-		<ul>
-			<li><a href="/home">Home</a></li>
-			<li><a href="/sign/out">Sign out</a></li>
-		</ul>
-	</div>
-	<div id="channel">
-		<h3>Channel for distribution</h3>
-		<form action="/admin/add/channel" method="GET">
-			<input type="text" name="name" value="{{channel.name}}">
-			<input type="submit">
-		</form>
-	</div>
-	{{hui}}
-	<div id="users">
-		<h2>Users:</h2>
-		<div id="login-list">
-			
-		</div>
-		<button data-js="open" class="add-new">Add new user</button>
-		<div class="popup post">
-			<form action="/admin/add/user" method="POST">
-				<input name="login" type="text" placeholder="Login" style="margin-bottom: 10px;"><br>
-				<input name="password" type="password" placeholder="Password" style="margin-bottom: 10px;"><br>
-				<button type="submit">Submit</button>
-			</form>
-			<button name="close">Close</button>
-		</div>	
-	</div>
-	<div id="receivers">
-		<h2>Receivers:</h2>
-		<div id="username-list">
-			
-		</div>
-		<button data-js="openn" class="add-new">Add new receiver</button>
-		<div class="popup get">
-			<form action="/admin/add/receiver" method="GET">
-				<input name="username" type="text" placeholder="Username" style="margin-bottom: 10px;"><br>
-				<button type="submit">Submit</button>
-			</form>
-			<button name="close">Close</button>
-		</div>		
-	</div>
+    <div class="container-fluid links mb-3">
+        <ul class="nav justify-content-end h3">
+            <li class="nav-item">
+                <a href="/home" class="nav-link text-white">Home</a>
+            </li>
+            <li class="nav-item">
+                <a href="/sign/out" class="nav-link text-white">Sign out</a>
+            </li>
+        </ul>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div id="channel" class="col-12 col-md-4 mb-3 mb-md-0">
+                <h2 class="text-white">Channel for distribution</h2>
+                <form action="/admin/add/channel" method="GET">
+                    <div class="form-row">
+                        <div class="col">
+                            <input
+                                    type="text"
+                                    name="name"
+                                    value="{{channel.name}}"
+                                    class="form-control"
+                            />
+                        </div>
+                        <div class="col">
+                            <input type="submit" class="btn btn-primary w-100"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="users" class="col-12 col-md-4 mb-3 mb-md-0">
+                <h2 class="text-white">Users:</h2>
+                <div id="login-list" class="list-group mb-3"></div>
+                <button data-js="open" class="btn btn-primary">
+                    Add new user
+                </button>
+                <div class="popup post">
+                    <form action="/admin/add/user" method="POST">
+                        <div class="form-group">
+                            <input
+                                    name="login"
+                                    type="text"
+                                    placeholder="Login"
+                                    class="form-control"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <input
+                                    name="password"
+                                    type="password"
+                                    placeholder="Password"
+                                    class="form-control"
+                            />
+                        </div>
+                        <input type="submit" class="btn btn-success" value="Submit"/>
+                        <button type="button" name="close" class="btn btn-danger">
+                            Close
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div id="receivers" class="col-12 col-md-4 mb-3 mb-md-0">
+                <h2 class="text-white">Receivers:</h2>
+                <div id="username-list" class="list-group mb-3"></div>
+                <button data-js="open" class="btn btn-primary">
+                    Add new receiver
+                </button>
+                <div class="popup get">
+                    <form action="/admin/add/receiver" method="GET">
+                        <div class="form-group">
+                            <input
+                                    name="login"
+                                    type="text"
+                                    placeholder="Login"
+                                    class="form-control"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <input
+                                    name="password"
+                                    type="password"
+                                    placeholder="Password"
+                                    class="form-control"
+                            />
+                        </div>
+                        <input type="submit" class="btn btn-success" value="Submit"/>
+                        <button type="button" name="close" class="btn btn-danger">
+                            Close
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

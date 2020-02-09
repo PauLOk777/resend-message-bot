@@ -1,33 +1,17 @@
-.links {
-	position: absolute;
-	right: 0;
+.links li a {
+  transition: color 0.2s linear;
 }
 
-.links ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
+.links ul li a:hover {
+  color: #e6e6e6 !important;
 }
-
-.links li {
-	display: inline-block;
-	margin: 0 10px;
-	font-size: 32px;
-}
-
-.links li a:link, .links li a:visited {
-	color: white;
-	text-decoration: none;
-}
-
-.links li a:hover {
-	color: #A0A0A0;
-}
-
-#wrapper {
-	margin: 30px;
-}
-
-#home-form div {
-	margin: 20px 0px;
+body {
+  background: #76b852; /* fallback for old browsers */
+  background: -webkit-linear-gradient(right, #76b852, #8dc26f);
+  background: -moz-linear-gradient(right, #76b852, #8dc26f);
+  background: -o-linear-gradient(right, #76b852, #8dc26f);
+  background: linear-gradient(to left, #76b852, #8dc26f);
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
