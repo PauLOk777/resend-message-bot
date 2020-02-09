@@ -7,13 +7,16 @@ function buildUsersAndReceivers(result) {
 		div.className = 'list';
 		div.id = element.login;
 
+		const a = document.createElement('a');
+		a.href = 'admin/delete/user/' + element.login;
 		const span = document.createElement('span');
 		span.innerText = element.login;
 		const button = document.createElement('button');
 		button.innerText = '×';
 
+		a.append(button);
 		div.append(span);
-		div.append(button);
+		div.append(a);
 		usersContent.append(div);
 	});
 
@@ -25,13 +28,16 @@ function buildUsersAndReceivers(result) {
 		div.className = 'list';
 		div.id = element.username;
 
+		const a = document.createElement('a');
+		a.href = '/admin/delete/receiver/' + element.username;
 		const span = document.createElement('span');
 		span.innerText = element.username;
 		const button = document.createElement('button');
 		button.innerText = '×';
 
+		a.append(button);
 		div.append(span);
-		div.append(button);
+		div.append(a);
 		receiversContent.append(div);
 	});
 }

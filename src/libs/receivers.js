@@ -16,6 +16,12 @@ async function addNewReceiverDB(username) {
 	await receiver.save();
 }
 
+async function deleteReceiverDB(username) {
+	await Receiver.deleteOne({ username }, err => {
+		if (err) throw new Error('Some problem with deleting receiver');
+	});
+}
+
 module.exports = {
 	findAllReceiversDB,
 	addNewReceiverDB

@@ -17,7 +17,8 @@ const {
 
 const {
 	findAllReceiversDB,
-	addNewReceiverDB
+	addNewReceiverDB,
+	deleteReceiverDB
 } = require('../libs/receivers.js');
 
 const {
@@ -204,7 +205,10 @@ async function deleteUser(req, res) {
 			return;
 		}
 		
-
+		await deleteUserDB(req.params.login);
+		await deleteSessionDB(req.params.login);
+		res.redirect('/admin');
+	
 	} catch (e) {
 		console.error(e);
 		res.status(404);
@@ -220,6 +224,8 @@ async function deleteReceiver(req, res) {
 			return;
 		}
 		
+		await deleteReceiverDB(req.params.username);
+		res.redirect('/admin');
 
 	} catch (e) {
 		console.error(e);
