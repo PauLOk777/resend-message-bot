@@ -1,7 +1,6 @@
 const Session = require('../models/Session');
 
-async function addSessionDB(resendBotId, login, isAdmin) {
-    isAdmin = isAdmin ? true : false;
+async function addSessionDB(resendBotId, login, isAdmin = false) {
     const session = new Session({
         resendBotId,
         login,
