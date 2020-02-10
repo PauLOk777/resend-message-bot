@@ -157,6 +157,13 @@ async function getInfoUsers(req, res) {
 		
 		const mainInfo = {};
 		mainInfo.users = await findAllUsersDB();
+
+		for (let i = 0; i < mainInfo.users.length; i++) {
+			if (mainInfo.users[i].login == currentSession.login) {
+				mainInfo.users[i] = 'Admin in panel';
+			}
+		}
+
 		mainInfo.receivers = await findAllReceiversDB();
 		res.send(mainInfo);
 
