@@ -1,9 +1,11 @@
 const Session = require('../models/Session');
 
-async function addSessionDB(resendBotId, login) {
+async function addSessionDB(resendBotId, login, isAdmin) {
+    isAdmin = isAdmin ? true : false;
     const session = new Session({
         resendBotId,
-        login
+        login,
+        isAdmin
     });
 
     await session.save();

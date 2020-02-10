@@ -26,6 +26,8 @@ const {
 	getChannelDB
 } = require('../libs/channels.js');
 
+const bot = require('../init/bot');
+
 const upload = require('../init/multer.js');
 
 const generateKey = require('../libs/random.js');
@@ -103,7 +105,7 @@ async function homePage(req, res) {
 }
 
 async function sendInfo(req, res) {
-	upload(req, res, err => {
+	upload(req, res, (err) => {
 		if (err) {
 			res.redirect('/home?error=true');
 		} else {
@@ -266,4 +268,4 @@ module.exports = {
 	deleteReceiver,
 	signOut,
 	getInfoUsers
-}
+};
