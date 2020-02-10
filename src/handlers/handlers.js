@@ -26,7 +26,12 @@ const {
 	getChannelDB
 } = require('../libs/channels.js');
 
-const bot = require('../init/bot');
+const {
+	buildMessage,
+	sendMessageToReceivers
+} = require('../helpers/helpers');
+
+const Bot = require('../init/bot');
 
 const upload = require('../init/multer.js');
 
@@ -105,13 +110,19 @@ async function homePage(req, res) {
 }
 
 async function sendInfo(req, res) {
-	upload(req, res, (err) => {
+	upload(req, res, async (err) => {
 		if (err) {
-			res.redirect('/home?error=true');
-		} else {
-			console.log(req.body, req.files);
-			res.redirect('/');
+			return res.redirect('/home?error=true');
 		}
+
+		const bot = await Bot.getBot();
+		const message = buildMessage(req.body);
+		
+		const photos = req.files.map(photo => photo.buffer);
+
+		sendMessageToReceivers(bot, message, photos);
+
+		res.redirect('/');
 	});
 }
 

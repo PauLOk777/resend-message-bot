@@ -1,6 +1,6 @@
 const Telegraf = require('telegraf');
 const { TG_TOKEN } = require('../config/config');
-const BotUser = require('../models/BotUser')
+const BotUser = require('../models/BotUser');
 
 /**
  * Middleware that adds bot
@@ -12,21 +12,6 @@ async function addBotUser(ctx, next) {
 				username: ctx.from.username
 			}, { upsert: true, new: true });
 		await next();
-}
-
-/**
- * Function that sends message
- * to every receiver (receivers)
- * is the array of { username }
- */
-async function sendMessageToReceivers(bot, message, receivers) {
-	const botUsers = await BotUser.find({
-		'username': { $in: receivers }
-	});
-	for (const botUser of botUsers) {
-		const { chatId } = botUser;
-		await bot.sendMessage(chatId, message);
-	}
 }
 
 const Bot = {
