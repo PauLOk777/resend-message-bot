@@ -7,7 +7,9 @@ const upload = multer({
 	fileFilter: (req, file, callback) => {
 		const ext = path.extname(file.originalname).toLowerCase();
 		if (ext !== '.jpg' && ext !== '.jpeg' && ext !== '.png') {
-			return callback(new Error('Only JPEG, JPG, PNG are allowed'));
+			return callback(
+				new Error('Ошибка: поддерживаются только jpeg, jpg, png картинки')
+			);
 		}
 		callback(null, true);
 	},

@@ -7,11 +7,13 @@ const BotUser = require('../models/BotUser');
  * users to the database
  */
 async function addBotUser(ctx, next) {
-		await BotUser.findOneAndUpdate({ chatId: ctx.from.id }, {
-				chatId: ctx.from.id,
-				username: ctx.from.username
-			}, { upsert: true, new: true });
-		await next();
+	const chatId = ctx.from ? ctx.from.id : ctx.chat.id; 
+	const username = ctx.from ? ctx.from.username : null;	
+	await BotUser.findOneAndUpdate({ chatId }, {
+			chatId,
+			username
+		}, { upsert: true, new: true });
+	await next();
 }
 
 const Bot = {

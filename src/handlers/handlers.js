@@ -1,3 +1,5 @@
+const { promisify } = require('util');
+
 const {
 	addUserDB,
 	checkUser,
@@ -28,6 +30,7 @@ const {
 
 const {
 	buildMessage,
+	sendMessageToChannel,
 	sendMessageToReceivers
 } = require('../helpers/helpers');
 
@@ -96,7 +99,7 @@ async function homePage(req, res) {
 			adminCheck = true;
 		}
 		
-		const error = req.query.error;
+		const { error } = req.query;
 		res.render('home.hbs', {
 			title: 'Home',
 			adminCheck,
@@ -110,20 +113,18 @@ async function homePage(req, res) {
 }
 
 async function sendInfo(req, res) {
-	upload(req, res, async (err) => {
-		if (err) {
-			return res.redirect('/home?error=true');
-		}
-
+	try {
+		await promisify(upload)(req, res);
 		const bot = await Bot.getBot();
 		const message = buildMessage(req.body);
-		
 		const photos = req.files.map(photo => photo.buffer);
-
-		sendMessageToReceivers(bot, message, photos);
-
+		const media = await sendMessageToChannel(bot, message, photos);
+		sendMessageToReceivers(bot, message, media);
 		res.redirect('/');
-	});
+	} catch (err) {
+		const url = encodeURI('/home?error=' + err.message);
+		return res.redirect(url);
+	}
 }
 
 async function adminPage(req, res) {
