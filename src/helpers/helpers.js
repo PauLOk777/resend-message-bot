@@ -2,6 +2,7 @@ const BotUser = require('../models/BotUser');
 const Duplex = require('stream').Duplex;
 const { findAllReceiversDB } = require('../libs/receivers.js');
 const {	getChannelDB } = require('../libs/channels.js');
+const { Markup } = require('telegraf');
 
 /**
  * Function that converts buffer
@@ -22,16 +23,20 @@ function buildMessage({ comment, phone, whatsApp, viber, telegram }) {
 
 	message += (telegram ? `✅` : `❌`) + ' Telegram\n';
 	message += (viber ? `✅` : `❌`) + ' Viber\n';
-	message += (whatsApp ? `✅` : `❌`) + ` WhatsApp 👉 ${link}\n`;
+	message += (whatsApp ? `✅ WhatsApp 👉 ${link}\n` : `❌ WhatsApp`);
 
-	return message;
+	const keyboard = Markup.inlineKeyboard([
+	  Markup.callbackButton('Обработано ✅', 'done')
+	]);
+
+	return { message, keyboard };
 }
 
 /**
  * Function that sends message
  * to the channel
  */
-async function sendMessageToChannel(bot, message, photos = []) {
+async function sendMessageToChannel(bot, message, keyboard, photos = []) {
 	// Get channel
 	const channel = await getChannelDB();
 	const channelName = channel.name.startsWith('@') ? channel.name.slice(1) : channel.name;
@@ -46,13 +51,21 @@ async function sendMessageToChannel(bot, message, photos = []) {
 	}
 	try {
 		if (data.length) {
-			data[data.length - 1].caption = message;
-			data[data.length - 1].parse_mode = 'html';
-			const media = await bot.telegram.sendMediaGroup('-100' + channelName, data);
+			const media = await bot.telegram.sendMediaGroup('-100' + channelName, data, {
+			  disable_web_page_preview: true
+			});
+
+			await bot.telegram.sendMessage('-100' + channelName, message, {
+			  parse_mode: 'html',
+			  reply_markup: keyboard,
+			  disable_web_page_preview: true
+			});
 			return media.map(item => item.photo[0].file_id);
 		} else {
-			await bot.telegram.sendMessage('-100' + channelName, message, {
-				parse_mode: 'html'
+		  	await bot.telegram.sendMessage('-100' + channelName, message, {
+				parse_mode: 'html',
+			  	reply_markup: keyboard,
+			  	disable_web_page_preview: true
 			});
 			return [];
 		}
@@ -97,10 +110,13 @@ async function sendMessageToReceivers(bot, message, photos = []) {
 		// Get chatid of current receiver
 		const { chatId } = botUser;
 		if (data.length) {
-			await bot.telegram.sendMediaGroup(chatId, data);
+		  	bot.telegram.sendMediaGroup(chatId, data, {
+			  disable_web_page_preview: true
+			});
 		} else {
-			await bot.telegram.sendMessage(chatId, message, {
-				parse_mode: 'html'
+		  	bot.telegram.sendMessage(chatId, message, {
+				parse_mode: 'html',
+			  	disable_web_page_preview: true
 			});
 		}
 	}
