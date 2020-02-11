@@ -116,7 +116,7 @@ async function sendInfo(req, res) {
 	try {
 	  	await promisify(upload)(req, res);
 		const bot = await Bot.getBot();
-		const { message, keyboard } = buildMessage(req.body);
+		const { message, keyboard } = await buildMessage(req.body);
 		const photos = req.files.map(photo => photo.buffer);
 		const media = await sendMessageToChannel(bot, message, keyboard, photos);
 		sendMessageToReceivers(bot, message, media);

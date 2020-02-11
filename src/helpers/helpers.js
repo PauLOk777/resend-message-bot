@@ -3,6 +3,7 @@ const Duplex = require('stream').Duplex;
 const { findAllReceiversDB } = require('../libs/receivers.js');
 const {	getChannelDB } = require('../libs/channels.js');
 const { Markup } = require('telegraf');
+const translatte = require('translatte');
 
 /**
  * Function that converts buffer
@@ -15,11 +16,14 @@ function bufferToStream(buffer) {
 	return stream;
 }
 
-function buildMessage({ comment, phone, whatsApp, viber, telegram }) {
+async function buildMessage({ comment, phone, whatsApp, viber, telegram }) {
   	const link = `https://api.whatsapp.com/send?phone=${phone}`
+	const english = (await translatte(comment, { to: 'en' })).text;
+
 	let message = `Комментарий: ${comment}\n`;
-	message += `Телефон: ${phone}\n`;
-	message += `Как можно связаться:\n`;
+	message += `Comment: ${english}\n`;
+  	message += `Телефон | Phone: ${phone}\n`;
+	message += `Как можно связаться: | Contacts:\n`;
 
 	message += (telegram ? `✅` : `❌`) + ' Telegram\n';
 	message += (viber ? `✅` : `❌`) + ' Viber\n';
