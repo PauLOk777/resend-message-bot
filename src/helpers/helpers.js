@@ -15,13 +15,14 @@ function bufferToStream(buffer) {
 }
 
 function buildMessage({ comment, phone, whatsApp, viber, telegram }) {
+  	const link = `https://api.whatsapp.com/send?phone=${phone}`
 	let message = `Комментарий: ${comment}\n`;
 	message += `Телефон: ${phone}\n`;
 	message += `Как можно связаться:\n`;
 
 	message += (telegram ? `✅` : `❌`) + ' Telegram\n';
 	message += (viber ? `✅` : `❌`) + ' Viber\n';
-	message += (whatsApp ? `✅` : `❌`) + ' WhatsApp\n';
+	message += (whatsApp ? `✅` : `❌`) + ` WhatsApp 👉 ${link}\n`;
 
 	return message;
 }
