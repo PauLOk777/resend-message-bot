@@ -72,6 +72,7 @@ async function sendMessageToChannel(bot, message, keyboard, photos = []) {
 	} catch (err) {
 		console.error(err.message);
 		err.message = 'Ошибка: не удалось отправить сообщение в канал';
+		console.log('err')
 		throw err;
 	}
 }
@@ -109,6 +110,7 @@ async function sendMessageToReceivers(bot, message, photos = []) {
 	for (const botUser of botUsers) {
 		// Get chatid of current receiver
 		const { chatId } = botUser;
+
 		if (data.length) {
 		  	bot.telegram.sendMediaGroup(chatId, data, {
 			  disable_web_page_preview: true
