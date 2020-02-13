@@ -17,7 +17,7 @@ function bufferToStream(buffer) {
 }
 
 async function buildMessage({ comment, phone, whatsApp, viber, telegram }) {
-  	const link = `https://api.whatsapp.com/send?phone=${phone}`
+  	const link = `https://api.whatsapp.com/send?phone=${phone}`;
 	const english = (await translatte(comment, { to: 'en' })).text;
 
 	let message = `Комментарий: ${comment}\n`;
