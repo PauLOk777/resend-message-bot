@@ -53,7 +53,7 @@ async function authorizationPage(req, res) {
 	} catch(e) {
 		console.error(e);
 		res.status(404);
-		return;	
+		return;
 	}
 }
 
@@ -98,7 +98,7 @@ async function homePage(req, res) {
 		if (currentSession.isAdmin) {
 			adminCheck = true;
 		}
-		
+
 		const { error } = req.query;
 		res.render('home.hbs', {
 			title: 'Home',
@@ -108,19 +108,19 @@ async function homePage(req, res) {
 	} catch (e) {
 		console.error(e);
 		res.status(404);
-		return;	
+		return;
 	}
 }
 
 async function sendInfo(req, res) {
 	try {
-		await promisify(upload)(req, res);
+	  	await promisify(upload)(req, res);
 		const bot = await Bot.getBot();
-		const message = buildMessage(req.body);
+		const { message, keyboard } = await buildMessage(req.body);
 		const photos = req.files.map(photo => photo.buffer);
-		const media = await sendMessageToChannel(bot, message, photos);
+		const media = await sendMessageToChannel(bot, message, keyboard, photos);
 		sendMessageToReceivers(bot, message, media);
-		res.redirect('/');
+	  	res.redirect('/');
 	} catch (err) {
 		const url = encodeURI('/home?error=' + err.message);
 		return res.redirect(url);
@@ -136,7 +136,7 @@ async function adminPage(req, res) {
 		}
 
 		const channel = await getChannelDB();
-		
+
 		res.render('adminPanel.hbs', {
 			title: 'Admin panel',
 			channel
@@ -144,7 +144,7 @@ async function adminPage(req, res) {
 	} catch (e) {
 		console.error(e);
 		res.status(404);
-		return;	
+		return;
 	}
 }
 
@@ -155,7 +155,7 @@ async function getInfoUsers(req, res) {
 			res.redirect('/');
 			return;
 		}
-		
+
 		const mainInfo = {};
 		mainInfo.users = await findAllUsersDB();
 
@@ -171,8 +171,8 @@ async function getInfoUsers(req, res) {
 	} catch (e) {
 		console.error(e);
 		res.status(404);
-		return;	
-	}	
+		return;
+	}
 }
 
 async function addUser(req, res) {
@@ -192,7 +192,7 @@ async function addUser(req, res) {
 	} catch (e) {
 		console.error(e);
 		res.status(404);
-		return;	
+		return;
 	}
 }
 
@@ -203,14 +203,14 @@ async function addReceiver(req, res) {
 			res.redirect('/');
 			return;
 		}
-		
+
 		await addNewReceiverDB(req.query.username);
 		res.redirect('/admin');
-	
+
 	} catch (e) {
 		console.error(e);
 		res.status(404);
-		return;	
+		return;
 	}
 }
 
@@ -221,14 +221,14 @@ async function addNewChannel(req, res) {
 			res.redirect('/');
 			return;
 		}
-		
+
 		await addNewChannelDB(req.query.name);
 		res.redirect('/admin');
 
 	} catch (e) {
 		console.error(e);
 		res.status(404);
-		return;	
+		return;
 	}
 }
 
@@ -239,15 +239,15 @@ async function deleteUser(req, res) {
 			res.redirect('/');
 			return;
 		}
-		
+
 		await deleteUserDB(req.params.login);
 		await deleteSessionDB(req.params.login);
 		res.redirect('/admin');
-	
+
 	} catch (e) {
 		console.error(e);
 		res.status(404);
-		return;	
+		return;
 	}
 }
 
@@ -258,14 +258,14 @@ async function deleteReceiver(req, res) {
 			res.redirect('/');
 			return;
 		}
-		
+
 		await deleteReceiverDB(req.params.username);
 		res.redirect('/admin');
 
 	} catch (e) {
 		console.error(e);
 		res.status(404);
-		return;	
+		return;
 	}
 }
 

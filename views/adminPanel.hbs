@@ -19,17 +19,17 @@
     <div class="container-fluid links mb-3">
         <ul class="nav justify-content-end h3">
             <li class="nav-item">
-                <a href="/home" class="nav-link text-white">Home</a>
+                <a href="/home" class="nav-link text-white">Главная</a>
             </li>
             <li class="nav-item">
-                <a href="/sign/out" class="nav-link text-white">Sign out</a>
+                <a href="/sign/out" class="nav-link text-white">Выйти</a>
             </li>
         </ul>
     </div>
     <div class="container-fluid">
         <div class="row">
             <div id="channel" class="col-12 col-md-4 mb-3 mb-md-0">
-                <h2 class="text-white">Channel for distribution</h2>
+                <h2 class="text-white">ID канала</h2>
                 <form action="/admin/add/channel" method="GET">
                     <div class="form-row">
                         <div class="col">
@@ -41,16 +41,16 @@
                             />
                         </div>
                         <div class="col">
-                            <input type="submit" class="btn btn-primary w-100"/>
+                            <input type="submit" value="Сохранить" class="btn btn-primary w-100"/>
                         </div>
                     </div>
                 </form>
             </div>
             <div id="users" class="col-12 col-md-4 mb-3 mb-md-0">
-                <h2 class="text-white">Users:</h2>
+                <h2 class="text-white">Пользователи:</h2>
                 <div id="login-list" class="list-group mb-3"></div>
                 <button data-js="open" class="btn btn-primary">
-                    Add new user
+                    Добавить пользователя
                 </button>
                 <div class="popup post">
                     <form action="/admin/add/user" method="POST">
@@ -58,7 +58,7 @@
                             <input
                                     name="login"
                                     type="text"
-                                    placeholder="Login"
+                                    placeholder="Логин"
                                     class="form-control"
                             />
                         </div>
@@ -66,31 +66,31 @@
                             <input
                                     name="password"
                                     type="password"
-                                    placeholder="Password"
+                                    placeholder="Пароль"
                                     class="form-control"
                             />
                         </div>
-                        <input type="submit" class="btn btn-success" value="Submit"/>
+                        <input type="submit" class="btn btn-success" value="Добавить"/>
                         <button type="button" name="close" class="btn btn-danger">
-                            Close
+                            Закрыть
                         </button>
                     </form>
                 </div>
             </div>
             <div id="receivers" class="col-12 col-md-4 mb-3 mb-md-0">
-                <h2 class="text-white">Receivers:</h2>
+                <h2 class="text-white">Получатели:</h2>
                 <div id="username-list" class="list-group mb-3"></div>
                 <button data-js="openn" class="btn btn-primary">
-                    Add new receiver
+                    Добавить получателя
                 </button>
                 <div class="popup get">
                     <form action="/admin/add/receiver" method="GET">
                         <div class="form-group">
-                            <input name="username" class="form-control" type="text" placeholder="Username" style="padding: 5px"><br>
+                            <input name="username" class="form-control" type="text" placeholder="Юзернейм" style="padding: 5px"><br>
                         </div>
-                        <input type="submit" class="btn btn-success" value="Submit"/>
+                        <input type="submit" class="btn btn-success" value="Добавить"/>
                         <button type="button" name="close" class="btn btn-danger">
-                            Close
+                            Закрыть
                         </button>
                     </form>
                 </div>
